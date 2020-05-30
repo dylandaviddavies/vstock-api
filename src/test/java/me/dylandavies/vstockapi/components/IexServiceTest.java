@@ -1,6 +1,7 @@
 package me.dylandavies.vstockapi.components;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -21,13 +22,13 @@ class IexServiceTest {
 
 	private static final String TESLA_SYMBOL = "TSLA";
 
-	private IexService service;
-
-	private Quote createMockQuote(String symbol) {
+	private static Quote createMockQuote(String symbol) {
 		return new Quote(symbol, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
 				null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
 				null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 	}
+
+	private IexService service;
 
 	@Test
 	void getMultipleQuotes() {
@@ -35,6 +36,15 @@ class IexServiceTest {
 				createMockQuote(TESLA_SYMBOL));
 
 		Map<String, Quote> results = service.getQuotes(Arrays.asList(APPLE_SYMBOL, TESLA_SYMBOL));
+
+		Assertions.assertEquals(results, expected);
+	}
+
+	@Test
+	void getNoQuotes() {
+		Map<String, Quote> expected = Collections.emptyMap();
+
+		Map<String, Quote> results = service.getQuotes(Arrays.asList("fakesymbol"));
 
 		Assertions.assertEquals(results, expected);
 	}
@@ -63,11 +73,21 @@ class IexServiceTest {
 		Assertions.assertEquals(results, expected);
 	}
 
+	@Test
+	void getSomeQuotes() {
+		Map<String, Quote> expected = Map.of(APPLE_SYMBOL, createMockQuote(APPLE_SYMBOL), FACEBOOK_SYMBOL,
+				createMockQuote(FACEBOOK_SYMBOL));
+
+		Map<String, Quote> results = service.getQuotes(Arrays.asList(APPLE_SYMBOL, FACEBOOK_SYMBOL, "fakesymbol"));
+
+		Assertions.assertEquals(results, expected);
+	}
+
 	@BeforeEach
 	void setUp() {
-		service = new IexService(
-				new MockIexQuoteRepository(Arrays.asList(APPLE_SYMBOL, TESLA_SYMBOL, FACEBOOK_SYMBOL, PARADOX_SYMBOL)
-						.stream().collect(Collectors.toMap(k -> k, this::createMockQuote))));
+		Map<String, Quote> repo = Arrays.asList(APPLE_SYMBOL, TESLA_SYMBOL, FACEBOOK_SYMBOL, PARADOX_SYMBOL).stream()
+				.collect(Collectors.toMap(k -> k, IexServiceTest::createMockQuote));
+		service = new IexService(new MockIexQuoteRepository(repo));
 	}
 
 }

@@ -2,6 +2,7 @@ package me.dylandavies.vstockapi.repositories;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import lombok.NonNull;
@@ -17,6 +18,7 @@ public class MockIexQuoteRepository implements IIexQuoteRepository {
 	public Map<String, Quote> getAll(List<String> symbols) {
 		return symbols.stream()//
 				.map(repo::get)//
+				.filter(Objects::nonNull)//
 				.collect(Collectors.toMap(Quote::getSymbol, v -> v));
 	}
 
