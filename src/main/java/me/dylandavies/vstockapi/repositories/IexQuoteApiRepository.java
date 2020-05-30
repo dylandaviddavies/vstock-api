@@ -16,8 +16,15 @@ import com.google.common.cache.LoadingCache;
 import me.dylandavies.vstockapi.cache.IexQuoteCacheLoader;
 import pl.zankowski.iextrading4j.api.stocks.Quote;
 
+/**
+ * IEX quote repository utilizing the IEX API and a cache with a TTL of one
+ * hour.
+ *
+ * @author Dylan Davies
+ *
+ */
 @Repository
-public class IexQuoteRepository implements IIexQuoteRepository {
+public class IexQuoteApiRepository implements IIexQuoteRepository {
 
 	private LoadingCache<String, Quote> cache;
 

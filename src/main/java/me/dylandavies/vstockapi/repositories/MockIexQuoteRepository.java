@@ -9,6 +9,12 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import pl.zankowski.iextrading4j.api.stocks.Quote;
 
+/**
+ * Mock IEX quote repository.
+ *
+ * @author Dylan Davies
+ *
+ */
 @RequiredArgsConstructor
 public class MockIexQuoteRepository implements IIexQuoteRepository {
 
