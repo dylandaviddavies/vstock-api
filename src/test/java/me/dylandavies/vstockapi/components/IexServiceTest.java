@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import me.dylandavies.vstockapi.repositories.MockIexQuoteRepository;
+import me.dylandavies.vstockapi.services.IexService;
 import pl.zankowski.iextrading4j.api.stocks.Quote;
 
 class IexServiceTest {

@@ -1,4 +1,4 @@
-package me.dylandavies.vstockapi.components;
+package me.dylandavies.vstockapi.services;
 
 import java.util.List;
 import java.util.Map;

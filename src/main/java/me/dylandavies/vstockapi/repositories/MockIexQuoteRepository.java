@@ -21,7 +21,12 @@ public class MockIexQuoteRepository implements IIexQuoteRepository {
 	private @NonNull Map<String, Quote> repo;
 
 	@Override
-	public Map<String, Quote> getAll(List<String> symbols) {
+	public Quote get(@NonNull String symbol) {
+		return repo.get(symbol);
+	}
+
+	@Override
+	public Map<String, Quote> getAll(@NonNull List<String> symbols) {
 		return symbols.stream()//
 				.map(repo::get)//
 				.filter(Objects::nonNull)//
