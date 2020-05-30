@@ -1,6 +1,7 @@
-package me.dylandavies.vstockapi.components;
+package me.dylandavies.vstockapi.cache;
 
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import com.google.common.cache.CacheLoader;
@@ -22,6 +23,7 @@ import pl.zankowski.iextrading4j.client.rest.request.stocks.v1.BatchStocksType;
 public class IexQuoteCacheLoader extends CacheLoader<String, Quote> {
 
 	private @NonNull String publishableToken;
+
 	private @NonNull String secretToken;
 
 	private IEXCloudClient createClient() {
@@ -46,6 +48,6 @@ public class IexQuoteCacheLoader extends CacheLoader<String, Quote> {
 				.withSymbols(Lists.newArrayList(keys))//
 				.addType(BatchStocksType.QUOTE)//
 				.build());
-		return stocks.entrySet().stream().collect(Collectors.toMap(k -> k.getKey(), v -> v.getValue().getQuote()));
+		return stocks.entrySet().stream().collect(Collectors.toMap(Entry::getKey, v -> v.getValue().getQuote()));
 	}
 }

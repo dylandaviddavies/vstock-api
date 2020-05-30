@@ -1,6 +1,5 @@
 package me.dylandavies.vstockapi.controllers;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import me.dylandavies.vstockapi.components.IexService;
+import me.dylandavies.vstockapi.components.IIexService;
 import pl.zankowski.iextrading4j.api.stocks.Quote;
 
 @RestController
@@ -18,7 +17,7 @@ import pl.zankowski.iextrading4j.api.stocks.Quote;
 public class ApiController {
 
 	@Autowired
-	private IexService iexService;
+	private IIexService iexService;
 
 	@GetMapping("/quotes")
 	public Map<String, Quote> quotes(@RequestParam List<String> symbols) {
