@@ -20,7 +20,7 @@ public class ApiController {
 	private IIexService iexService;
 
 	@GetMapping("/quotes")
-	public Map<String, Quote> quotes(@RequestParam List<String> symbols) {
+	public Map<String, Quote> quotes(@RequestParam(required = true) List<String> symbols) {
 		return iexService.getQuotes(symbols);
 	}
 
