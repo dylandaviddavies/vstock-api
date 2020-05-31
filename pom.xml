@@ -16,7 +16,9 @@
 	<description>Stock analyzer for gaming companies.</description>
 
 	<properties>
-		<java.version>11</java.version>
+		<java.version>11.0.1</java.version>
+	    <maven.compiler.source>11.0.1</maven.compiler.source>
+	    <maven.compiler.target>11.0.1</maven.compiler.target>
 	</properties>
 
 	<dependencies>
