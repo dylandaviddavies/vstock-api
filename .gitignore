@@ -14,4 +14,3 @@ buildNumber.properties
 .factorypath
 .project
 .classpath
-src/main/resources/application.properties
