@@ -9,7 +9,6 @@ import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import lombok.NonNull;
 import me.dylandavies.vstockapi.enums.ChangeFilter;
 import me.dylandavies.vstockapi.enums.QuoteSort;
 import me.dylandavies.vstockapi.enums.SortDirection;
@@ -27,7 +26,7 @@ public class IexService implements IIexService {
 	}
 
 	@Override
-	public Map<String, Quote> getQuotes(@NonNull List<String> symbols, ChangeFilter changeFilter, QuoteSort sort,
+	public Map<String, Quote> getQuotes(List<String> symbols, ChangeFilter changeFilter, QuoteSort sort,
 			SortDirection sortDirection) {
 		List<String> uppercasedSymbols = symbols.stream()//
 				.map(String::toUpperCase)//
