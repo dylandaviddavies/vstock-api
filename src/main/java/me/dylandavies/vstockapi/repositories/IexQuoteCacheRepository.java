@@ -15,8 +15,6 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.collect.Lists;
 
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import pl.zankowski.iextrading4j.api.stocks.Quote;
 
 /**
@@ -27,15 +25,19 @@ import pl.zankowski.iextrading4j.api.stocks.Quote;
  *
  */
 @Repository("iexQuoteRepository")
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class IexQuoteCacheRepository implements IIexQuoteRepository {
 
 	private LoadingCache<String, Quote> cache;
 
-	private @NonNull IIexQuoteRepository iexQuoteDataRepository;
+	private IIexQuoteRepository iexQuoteDataRepository;
+
+	@Autowired
+	public IexQuoteCacheRepository(IIexQuoteRepository iexQuoteDataRepository) {
+		this.iexQuoteDataRepository = iexQuoteDataRepository;
+	}
 
 	@Override
-	public Quote get(@NonNull String symbol) {
+	public Quote get(String symbol) {
 		try {
 			return cache.get(symbol);
 		} catch (ExecutionException e) {
@@ -44,7 +46,7 @@ public class IexQuoteCacheRepository implements IIexQuoteRepository {
 	}
 
 	@Override
-	public Map<String, Quote> getAll(@NonNull List<String> symbols) {
+	public Map<String, Quote> getAll(List<String> symbols) {
 		try {
 			return cache.getAll(symbols);
 		} catch (ExecutionException e) {

@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import me.dylandavies.vstockapi.enums.ChangeFilter;
 import me.dylandavies.vstockapi.enums.QuoteSort;
 import me.dylandavies.vstockapi.enums.SortDirection;
@@ -18,10 +17,14 @@ import me.dylandavies.vstockapi.repositories.IIexQuoteRepository;
 import pl.zankowski.iextrading4j.api.stocks.Quote;
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class IexService implements IIexService {
 
-	private @NonNull IIexQuoteRepository iexQuoteRepository;
+	private IIexQuoteRepository iexQuoteRepository;
+
+	@Autowired
+	public IexService(IIexQuoteRepository iexQuoteRepository) {
+		this.iexQuoteRepository = iexQuoteRepository;
+	}
 
 	@Override
 	public Map<String, Quote> getQuotes(@NonNull List<String> symbols, ChangeFilter changeFilter, QuoteSort sort,

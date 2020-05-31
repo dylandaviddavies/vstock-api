@@ -3,7 +3,6 @@ package me.dylandavies.vstockapi.services;
 import java.util.List;
 import java.util.Map;
 
-import lombok.NonNull;
 import me.dylandavies.vstockapi.enums.ChangeFilter;
 import me.dylandavies.vstockapi.enums.QuoteSort;
 import me.dylandavies.vstockapi.enums.SortDirection;
@@ -20,12 +19,13 @@ public interface IIexService {
 	/**
 	 * Returns the quotes for the provided stock symbols.
 	 *
-	 * @param symbols Stock symbols
-	 * @param changeFilter TODO
-	 * @param sort TODO
+	 * @param symbols       Stock symbols
+	 * @param changeFilter  TODO
+	 * @param sort          TODO
 	 * @param sortDirection TODO
 	 * @return Quotes keyed by their stock symbol.
 	 */
-	Map<String, Quote> getQuotes(@NonNull List<String> symbols, ChangeFilter changeFilter, QuoteSort sort, SortDirection sortDirection);
+	Map<String, Quote> getQuotes(List<String> symbols, ChangeFilter changeFilter, QuoteSort sort,
+			SortDirection sortDirection);
 
 }

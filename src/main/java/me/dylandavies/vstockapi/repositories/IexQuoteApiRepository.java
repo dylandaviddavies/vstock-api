@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import com.google.common.collect.Lists;
 
-import lombok.NonNull;
 import pl.zankowski.iextrading4j.api.stocks.Quote;
 import pl.zankowski.iextrading4j.api.stocks.v1.BatchStocks;
 import pl.zankowski.iextrading4j.client.IEXCloudClient;
@@ -38,7 +37,7 @@ public class IexQuoteApiRepository implements IIexQuoteRepository {
 	}
 
 	@Override
-	public Quote get(@NonNull String key) {
+	public Quote get(String key) {
 		IEXCloudClient client = createClient();
 		return client.executeRequest(new QuoteRequestBuilder()//
 				.withSymbol(key.toUpperCase())//
@@ -46,7 +45,7 @@ public class IexQuoteApiRepository implements IIexQuoteRepository {
 	}
 
 	@Override
-	public Map<String, Quote> getAll(@NonNull List<String> keys) {
+	public Map<String, Quote> getAll(List<String> keys) {
 		IEXCloudClient client = createClient();
 		Map<String, BatchStocks> stocks = client.executeRequest(new BatchMarketStocksRequestBuilder()//
 				.withSymbols(Lists.newArrayList(keys))//

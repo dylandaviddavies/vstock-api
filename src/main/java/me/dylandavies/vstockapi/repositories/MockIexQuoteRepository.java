@@ -5,8 +5,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import pl.zankowski.iextrading4j.api.stocks.Quote;
 
 /**
@@ -15,18 +13,21 @@ import pl.zankowski.iextrading4j.api.stocks.Quote;
  * @author Dylan Davies
  *
  */
-@RequiredArgsConstructor
 public class MockIexQuoteRepository implements IIexQuoteRepository {
 
-	private @NonNull Map<String, Quote> repo;
+	private Map<String, Quote> repo;
+
+	public MockIexQuoteRepository(Map<String, Quote> repo) {
+		this.repo = repo;
+	}
 
 	@Override
-	public Quote get(@NonNull String symbol) {
+	public Quote get(String symbol) {
 		return repo.get(symbol);
 	}
 
 	@Override
-	public Map<String, Quote> getAll(@NonNull List<String> symbols) {
+	public Map<String, Quote> getAll(List<String> symbols) {
 		return symbols.stream()//
 				.map(repo::get)//
 				.filter(Objects::nonNull)//
