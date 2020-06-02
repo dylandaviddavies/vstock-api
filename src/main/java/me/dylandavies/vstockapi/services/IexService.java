@@ -3,16 +3,19 @@ package me.dylandavies.vstockapi.services;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import me.dylandavies.vstockapi.enums.ChangeFilter;
 import me.dylandavies.vstockapi.enums.QuoteSort;
 import me.dylandavies.vstockapi.enums.SortDirection;
 import me.dylandavies.vstockapi.repositories.IIexQuoteRepository;
+import me.dylandavies.vstockapi.utils.QuoteSearchPredicate;
 import pl.zankowski.iextrading4j.api.stocks.Quote;
 
 @Service
@@ -26,7 +29,7 @@ public class IexService implements IIexService {
 	}
 
 	@Override
-	public Map<String, Quote> getQuotes(List<String> symbols, ChangeFilter changeFilter, QuoteSort sort,
+	public Map<String, Quote> getQuotes(List<String> symbols, String search, ChangeFilter changeFilter, QuoteSort sort,
 			SortDirection sortDirection) {
 		List<String> uppercasedSymbols = symbols.stream()//
 				.map(String::toUpperCase)//
@@ -34,6 +37,10 @@ public class IexService implements IIexService {
 		Stream<Quote> stream = iexQuoteRepository.getAll(uppercasedSymbols)//
 				.values()//
 				.stream()//
+				.filter(Optional.ofNullable(search)//
+						.filter(s -> !StringUtils.isEmpty(s))//
+						.map(s -> (Predicate<Quote>) new QuoteSearchPredicate(s))//
+						.orElse(q -> true))
 				.filter(Optional.ofNullable(changeFilter)//
 						.map(ChangeFilter::getPredicate)//
 						.orElse(q -> true));

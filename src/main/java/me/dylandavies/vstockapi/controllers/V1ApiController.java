@@ -2,8 +2,6 @@ package me.dylandavies.vstockapi.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,16 +35,11 @@ public class V1ApiController {
 	 * @return Quotes keyed by their stock symbol.
 	 */
 	@GetMapping("/quotes")
-	public List<Quote> quotes(@RequestParam List<String> symbols,
+	public List<Quote> quotes(@RequestParam List<String> symbols, @RequestParam(required = false) String search,
 			@RequestParam(required = false) ChangeFilter changeFilter,
 			@RequestParam(required = false, defaultValue = "CHANGE") QuoteSort sort,
 			@RequestParam(required = false, defaultValue = "DESC") SortDirection sortDirection) {
-		List<Quote> quotes = new ArrayList<>(iexService.getQuotes(symbols, changeFilter, sort, sortDirection).values());
-		return quotes.stream()//
-				.sorted(sort.getComparator(sortDirection))//
-				.filter(Optional.ofNullable(changeFilter)//
-						.map(ChangeFilter::getPredicate)//
-						.orElse(q -> true))//
-				.collect(Collectors.toList());
+		List<Quote> quotes = new ArrayList<>(iexService.getQuotes(symbols, search, changeFilter, sort, sortDirection).values());
+		return quotes;
 	}
 }

@@ -36,7 +36,8 @@ class IexServiceTest {
 		Map<String, Quote> expected = Map.of(APPLE_SYMBOL, createMockQuote(APPLE_SYMBOL), TESLA_SYMBOL,
 				createMockQuote(TESLA_SYMBOL));
 
-		Map<String, Quote> results = service.getQuotes(Arrays.asList(APPLE_SYMBOL, TESLA_SYMBOL), null, null, null);
+		Map<String, Quote> results = service.getQuotes(Arrays.asList(APPLE_SYMBOL, TESLA_SYMBOL), null, null, null,
+				null);
 
 		Assertions.assertEquals(results, expected);
 	}
@@ -45,7 +46,7 @@ class IexServiceTest {
 	void getNoQuotes() {
 		Map<String, Quote> expected = Collections.emptyMap();
 
-		Map<String, Quote> results = service.getQuotes(Arrays.asList("fakesymbol"), null, null, null);
+		Map<String, Quote> results = service.getQuotes(Arrays.asList("fakesymbol"), null, null, null, null);
 
 		Assertions.assertEquals(results, expected);
 	}
@@ -54,7 +55,7 @@ class IexServiceTest {
 	void getOneQuote() {
 		Map<String, Quote> expected = Map.of(APPLE_SYMBOL, createMockQuote(APPLE_SYMBOL));
 
-		Map<String, Quote> results = service.getQuotes(Arrays.asList(APPLE_SYMBOL), null, null, null);
+		Map<String, Quote> results = service.getQuotes(Arrays.asList(APPLE_SYMBOL), null, null, null, null);
 
 		Assertions.assertEquals(results, expected);
 	}
@@ -69,7 +70,7 @@ class IexServiceTest {
 
 		Map<String, Quote> expected = Map.of(APPLE_SYMBOL, createMockQuote(APPLE_SYMBOL));
 
-		Map<String, Quote> results = service.getQuotes(Arrays.asList(lowerCaseSymbol), null, null, null);
+		Map<String, Quote> results = service.getQuotes(Arrays.asList(lowerCaseSymbol), null, null, null, null);
 
 		Assertions.assertEquals(results, expected);
 	}
@@ -80,7 +81,7 @@ class IexServiceTest {
 				createMockQuote(FACEBOOK_SYMBOL));
 
 		Map<String, Quote> results = service.getQuotes(Arrays.asList(APPLE_SYMBOL, FACEBOOK_SYMBOL, "fakesymbol"), null,
-				null, null);
+				null, null, null);
 
 		Assertions.assertEquals(results, expected);
 	}

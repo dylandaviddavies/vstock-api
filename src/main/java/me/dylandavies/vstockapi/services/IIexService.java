@@ -20,12 +20,13 @@ public interface IIexService {
 	 * Returns the quotes for the provided stock symbols.
 	 *
 	 * @param symbols       Stock symbols
+	 * @param search TODO
 	 * @param changeFilter  TODO
 	 * @param sort          TODO
 	 * @param sortDirection TODO
 	 * @return Quotes keyed by their stock symbol.
 	 */
-	Map<String, Quote> getQuotes(List<String> symbols, ChangeFilter changeFilter, QuoteSort sort,
-			SortDirection sortDirection);
+	Map<String, Quote> getQuotes(List<String> symbols, String search, ChangeFilter changeFilter,
+			QuoteSort sort, SortDirection sortDirection);
 
 }
