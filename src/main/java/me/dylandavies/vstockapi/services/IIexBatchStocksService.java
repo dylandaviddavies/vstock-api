@@ -2,6 +2,7 @@ package me.dylandavies.vstockapi.services;
 
 import java.util.List;
 
+import pl.zankowski.iextrading4j.api.stocks.ChartRange;
 import pl.zankowski.iextrading4j.api.stocks.v1.BatchStocks;
 
 /**
@@ -12,6 +13,6 @@ import pl.zankowski.iextrading4j.api.stocks.v1.BatchStocks;
  */
 public interface IIexBatchStocksService {
 
-	List<BatchStocks> getBatchStocks(List<String> symbols);
+	List<BatchStocks> getBatchStocks(List<String> symbols, ChartRange chartRange);
 
 }

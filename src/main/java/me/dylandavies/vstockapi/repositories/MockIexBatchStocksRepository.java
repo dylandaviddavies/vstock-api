@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import pl.zankowski.iextrading4j.api.stocks.ChartRange;
 import pl.zankowski.iextrading4j.api.stocks.v1.BatchStocks;
 
 /**
@@ -22,12 +23,12 @@ public class MockIexBatchStocksRepository implements IIexBatchStocksRepository {
 	}
 
 	@Override
-	public BatchStocks get(String symbol) {
+	public BatchStocks get(String symbol, ChartRange chartRange) {
 		return repo.get(symbol);
 	}
 
 	@Override
-	public List<BatchStocks> getAll(List<String> symbols) {
+	public List<BatchStocks> getAll(List<String> symbols, ChartRange chartRange) {
 		return symbols.stream()//
 				.map(repo::get)//
 				.filter(Objects::nonNull)//

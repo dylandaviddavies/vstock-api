@@ -44,7 +44,7 @@ class IexQuoteServiceTest {
 	void getMultipleQuotes() {
 		List<Quote> expected = Arrays.asList(createMockQuote(APPLE_SYMBOL), createMockQuote(TESLA_SYMBOL));
 
-		List<Quote> results = service.getQuotes(Arrays.asList(APPLE_SYMBOL, TESLA_SYMBOL), null, null, null, null);
+		List<Quote> results = service.getQuotes(Arrays.asList(APPLE_SYMBOL, TESLA_SYMBOL), null, null, null, null, null);
 
 		Assertions.assertEquals(results, expected);
 	}
@@ -53,7 +53,7 @@ class IexQuoteServiceTest {
 	void getNoQuotes() {
 		List<Quote> expected = Collections.emptyList();
 
-		List<Quote> results = service.getQuotes(Arrays.asList("fakesymbol"), null, null, null, null);
+		List<Quote> results = service.getQuotes(Arrays.asList("fakesymbol"), null, null, null, null, null);
 
 		Assertions.assertEquals(results, expected);
 	}
@@ -62,7 +62,7 @@ class IexQuoteServiceTest {
 	void getOneQuote() {
 		List<Quote> expected = Arrays.asList(createMockQuote(APPLE_SYMBOL));
 
-		List<Quote> results = service.getQuotes(Arrays.asList(APPLE_SYMBOL), null, null, null, null);
+		List<Quote> results = service.getQuotes(Arrays.asList(APPLE_SYMBOL), null, null, null, null, null);
 
 		Assertions.assertEquals(results, expected);
 	}
@@ -77,7 +77,7 @@ class IexQuoteServiceTest {
 
 		List<Quote> expected = Arrays.asList(createMockQuote(APPLE_SYMBOL));
 
-		List<Quote> results = service.getQuotes(Arrays.asList(lowerCaseSymbol), null, null, null, null);
+		List<Quote> results = service.getQuotes(Arrays.asList(lowerCaseSymbol), null, null, null, null, null);
 
 		Assertions.assertEquals(results, expected);
 	}
@@ -87,7 +87,7 @@ class IexQuoteServiceTest {
 		List<Quote> expected = Arrays.asList(createMockQuote(APPLE_SYMBOL), createMockQuote(FACEBOOK_SYMBOL));
 
 		List<Quote> results = service.getQuotes(Arrays.asList(APPLE_SYMBOL, FACEBOOK_SYMBOL, "fakesymbol"), null, null,
-				null, null);
+				null, null, null);
 
 		Assertions.assertEquals(results, expected);
 	}

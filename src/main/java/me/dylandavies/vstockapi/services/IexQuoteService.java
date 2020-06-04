@@ -15,6 +15,7 @@ import me.dylandavies.vstockapi.enums.ChangeFilter;
 import me.dylandavies.vstockapi.enums.QuoteSort;
 import me.dylandavies.vstockapi.enums.SortDirection;
 import me.dylandavies.vstockapi.utils.QuoteSearchPredicate;
+import pl.zankowski.iextrading4j.api.stocks.ChartRange;
 import pl.zankowski.iextrading4j.api.stocks.Quote;
 import pl.zankowski.iextrading4j.api.stocks.v1.BatchStocks;
 
@@ -28,17 +29,16 @@ public class IexQuoteService implements IIexQuoteService {
 		this.iexBatchStocksService = iexBatchStocksService;
 	}
 
-	private List<Quote> getQuotes(List<String> symbols) {
-		return iexBatchStocksService.getBatchStocks(symbols)///
-				.stream()//
-				.map(BatchStocks::getQuote).collect(Collectors.toList());
+	private List<Quote> getQuotes(List<String> symbols, ChartRange chartRange) {
+		return iexBatchStocksService.getBatchStocks(symbols, chartRange)///
+				.stream().map(BatchStocks::getQuote).collect(Collectors.toList());
 	}
 
 	@Override
 	public List<Quote> getQuotes(List<String> symbols, String search, ChangeFilter changeFilter, QuoteSort sort,
-			SortDirection sortDirection) {
+			SortDirection sortDirection, ChartRange chartRange) {
 		try {
-			Stream<Quote> stream = getQuotes(symbols)//
+			Stream<Quote> stream = getQuotes(symbols, chartRange)//
 					.stream()//
 					.filter(Optional.ofNullable(search)//
 							.filter(s -> !StringUtils.isEmpty(s))//
