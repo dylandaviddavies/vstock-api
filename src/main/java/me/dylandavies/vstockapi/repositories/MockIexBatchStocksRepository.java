@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import pl.zankowski.iextrading4j.api.stocks.Quote;
+import pl.zankowski.iextrading4j.api.stocks.v1.BatchStocks;
 
 /**
  * Mock IEX quote repository.
@@ -13,25 +13,25 @@ import pl.zankowski.iextrading4j.api.stocks.Quote;
  * @author Dylan Davies
  *
  */
-public class MockIexQuoteRepository implements IIexQuoteRepository {
+public class MockIexBatchStocksRepository implements IIexBatchStocksRepository {
 
-	private Map<String, Quote> repo;
+	private Map<String, BatchStocks> repo;
 
-	public MockIexQuoteRepository(Map<String, Quote> repo) {
+	public MockIexBatchStocksRepository(Map<String, BatchStocks> repo) {
 		this.repo = repo;
 	}
 
 	@Override
-	public Quote get(String symbol) {
+	public BatchStocks get(String symbol) {
 		return repo.get(symbol);
 	}
 
 	@Override
-	public Map<String, Quote> getAll(List<String> symbols) {
+	public List<BatchStocks> getAll(List<String> symbols) {
 		return symbols.stream()//
 				.map(repo::get)//
 				.filter(Objects::nonNull)//
-				.collect(Collectors.toMap(Quote::getSymbol, v -> v));
+				.collect(Collectors.toList());
 	}
 
 }
