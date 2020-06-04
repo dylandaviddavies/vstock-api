@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 import javax.annotation.PostConstruct;
 
@@ -29,19 +28,13 @@ import pl.zankowski.iextrading4j.api.stocks.v1.BatchStocks;
 @Repository("iexBatchStocksRepository")
 public class IexBatchStocksCacheRepository implements IIexBatchStocksRepository {
 
-	private LoadingCache<String, BatchStocks> biYearlyCache;
-
 	private LoadingCache<String, BatchStocks> dailyCache;
 
 	private IIexBatchStocksRepository iexBatchStocksDataRepository;
 
-	private LoadingCache<String, BatchStocks> maxCache;
-
 	private LoadingCache<String, BatchStocks> monthlyCache;
 
 	private LoadingCache<String, BatchStocks> weeklyCache;
-
-	private LoadingCache<String, BatchStocks> yearlyCache;
 
 	@Autowired
 	public IexBatchStocksCacheRepository(IIexBatchStocksRepository iexBatchStocksDataRepository) {
@@ -56,7 +49,7 @@ public class IexBatchStocksCacheRepository implements IIexBatchStocksRepository 
 			} catch (ExecutionException e) {
 				return null;
 			}
-		}, () -> iexBatchStocksDataRepository.get(symbol, chartRange));
+		});
 	}
 
 	@Override
@@ -67,7 +60,7 @@ public class IexBatchStocksCacheRepository implements IIexBatchStocksRepository 
 			} catch (ExecutionException e) {
 				return new ArrayList<>(c.getAllPresent(symbols).values());
 			}
-		}, () -> iexBatchStocksDataRepository.getAll(symbols, chartRange));
+		});
 	}
 
 	@PostConstruct
@@ -75,37 +68,21 @@ public class IexBatchStocksCacheRepository implements IIexBatchStocksRepository 
 		dailyCache = CacheBuilder.newBuilder()//
 				.maximumSize(100)//
 				.weakValues()//
-				.expireAfterWrite(30, TimeUnit.MINUTES)//
+				.expireAfterWrite(1, TimeUnit.HOURS)//
 				.build(new BatchStocksCacheLoader(iexBatchStocksDataRepository, ChartRange.ONE_DAY));
 		weeklyCache = CacheBuilder.newBuilder()//
 				.maximumSize(100)//
 				.weakValues()//
-				.expireAfterWrite(30, TimeUnit.MINUTES)//
+				.expireAfterWrite(1, TimeUnit.HOURS)//
 				.build(new BatchStocksCacheLoader(iexBatchStocksDataRepository, ChartRange.FIVE_DAYS));
 		monthlyCache = CacheBuilder.newBuilder()//
-				.maximumSize(10)//
+				.maximumSize(100)//
 				.weakValues()//
-				.expireAfterWrite(30, TimeUnit.MINUTES)//
+				.expireAfterWrite(1, TimeUnit.HOURS)//
 				.build(new BatchStocksCacheLoader(iexBatchStocksDataRepository, ChartRange.ONE_MONTH));
-		biYearlyCache = CacheBuilder.newBuilder()//
-				.maximumSize(10)//
-				.weakValues()//
-				.expireAfterWrite(30, TimeUnit.MINUTES)//
-				.build(new BatchStocksCacheLoader(iexBatchStocksDataRepository, ChartRange.SIX_MONTHS));
-		yearlyCache = CacheBuilder.newBuilder()//
-				.maximumSize(10)//
-				.weakValues()//
-				.expireAfterWrite(30, TimeUnit.MINUTES)//
-				.build(new BatchStocksCacheLoader(iexBatchStocksDataRepository, ChartRange.ONE_YEAR));
-		maxCache = CacheBuilder.newBuilder()//
-				.maximumSize(10)//
-				.weakValues()//
-				.expireAfterWrite(30, TimeUnit.MINUTES)//
-				.build(new BatchStocksCacheLoader(iexBatchStocksDataRepository, ChartRange.MAX));
 	}
 
-	public <T> T withCache(ChartRange chartRange, Function<LoadingCache<String, BatchStocks>, T> func,
-			Supplier<T> fallback) {
+	public <T> T withCache(ChartRange chartRange, Function<LoadingCache<String, BatchStocks>, T> func) {
 		switch (chartRange) {
 		case ONE_DAY:
 			return func.apply(dailyCache);
@@ -113,14 +90,8 @@ public class IexBatchStocksCacheRepository implements IIexBatchStocksRepository 
 			return func.apply(weeklyCache);
 		case ONE_MONTH:
 			return func.apply(monthlyCache);
-		case SIX_MONTHS:
-			return func.apply(biYearlyCache);
-		case ONE_YEAR:
-			return func.apply(yearlyCache);
-		case MAX:
-			return func.apply(maxCache);
 		default:
-			return fallback.get();
+			throw new IllegalArgumentException("Unsupported chartRange: " + chartRange);
 		}
 	}
 
