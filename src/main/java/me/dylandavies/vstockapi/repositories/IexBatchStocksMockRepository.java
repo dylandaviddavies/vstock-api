@@ -2,6 +2,7 @@ package me.dylandavies.vstockapi.repositories;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import pl.zankowski.iextrading4j.api.stocks.ChartRange;
@@ -30,6 +31,7 @@ public class IexBatchStocksMockRepository implements IIexBatchStocksRepository {
 	public List<BatchStocks> getAll(List<String> symbols, ChartRange chartRange) throws Exception {
 		return symbols.stream()//
 				.map(repo::get)//
+				.filter(Objects::nonNull)//
 				.collect(Collectors.toList());
 	}
 
