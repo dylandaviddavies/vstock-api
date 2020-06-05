@@ -15,20 +15,23 @@ public interface IIexBatchStocksRepository {
 
 	/**
 	 * Returns the batch stocks for the provided stock symbols.
-	 * @param chartRange TODO
-	 * @param symbols The stock symbols to get the batch stocks for.
+	 *
+	 * @param chartRange
+	 * @param symbols    The stock symbols to get the batch stocks for.
 	 *
 	 * @return Batch stocks keyed by their stock symbol.
+	 * @throws Exception
 	 */
-	BatchStocks get(String symbol, ChartRange chartRange);
+	BatchStocks get(String symbol, ChartRange chartRange) throws Exception;
 
 	/**
 	 * Returns the batch stocks for the provided stock symbols.
 	 *
-	 * @param symbols The stock symbols to get the batch stocks for.
-	 * @param chartRange TODO
+	 * @param symbols    The stock symbols to get the batch stocks for.
+	 * @param chartRange
 	 * @return Batch stocks keyed by their stock symbol.
+	 * @throws Exception
 	 */
-	List<BatchStocks> getAll(List<String> symbols, ChartRange chartRange);
+	List<BatchStocks> getAll(List<String> symbols, ChartRange chartRange) throws Exception;
 
 }

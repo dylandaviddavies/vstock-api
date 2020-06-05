@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import me.dylandavies.vstockapi.repositories.MockIexBatchStocksRepository;
+import me.dylandavies.vstockapi.repositories.IexBatchStocksMockRepository;
 import me.dylandavies.vstockapi.services.IexBatchStocksService;
 import me.dylandavies.vstockapi.services.IexQuoteService;
 import pl.zankowski.iextrading4j.api.stocks.Quote;
@@ -44,59 +44,45 @@ class IexQuoteServiceTest {
 	void getMultipleQuotes() {
 		List<Quote> expected = Arrays.asList(createMockQuote(APPLE_SYMBOL), createMockQuote(TESLA_SYMBOL));
 
-		List<Quote> results = service.getQuotes(Arrays.asList(APPLE_SYMBOL, TESLA_SYMBOL), null, null, null, null, null);
+		List<Quote> results = service.getAll(Arrays.asList(APPLE_SYMBOL, TESLA_SYMBOL), null, null, null, null,
+				null);
 
-		Assertions.assertEquals(results, expected);
+		Assertions.assertEquals(expected, results);
 	}
 
 	@Test
 	void getNoQuotes() {
 		List<Quote> expected = Collections.emptyList();
 
-		List<Quote> results = service.getQuotes(Arrays.asList("fakesymbol"), null, null, null, null, null);
+		List<Quote> results = service.getAll(Arrays.asList("fakesymbol"), null, null, null, null, null);
 
-		Assertions.assertEquals(results, expected);
+		Assertions.assertEquals(expected, results);
 	}
 
 	@Test
 	void getOneQuote() {
 		List<Quote> expected = Arrays.asList(createMockQuote(APPLE_SYMBOL));
 
-		List<Quote> results = service.getQuotes(Arrays.asList(APPLE_SYMBOL), null, null, null, null, null);
+		List<Quote> results = service.getAll(Arrays.asList(APPLE_SYMBOL), null, null, null, null, null);
 
-		Assertions.assertEquals(results, expected);
-	}
-
-	/**
-	 * Symbols are stored as uppercase, but the service should allow lowercase
-	 * symbols
-	 */
-	@Test
-	void getQuoteWithLowerCaseSymbol() {
-		String lowerCaseSymbol = APPLE_SYMBOL.toLowerCase();
-
-		List<Quote> expected = Arrays.asList(createMockQuote(APPLE_SYMBOL));
-
-		List<Quote> results = service.getQuotes(Arrays.asList(lowerCaseSymbol), null, null, null, null, null);
-
-		Assertions.assertEquals(results, expected);
+		Assertions.assertEquals(expected, results);
 	}
 
 	@Test
 	void getSomeQuotes() {
 		List<Quote> expected = Arrays.asList(createMockQuote(APPLE_SYMBOL), createMockQuote(FACEBOOK_SYMBOL));
 
-		List<Quote> results = service.getQuotes(Arrays.asList(APPLE_SYMBOL, FACEBOOK_SYMBOL, "fakesymbol"), null, null,
+		List<Quote> results = service.getAll(Arrays.asList(APPLE_SYMBOL, FACEBOOK_SYMBOL, "fakesymbol"), null, null,
 				null, null, null);
 
-		Assertions.assertEquals(results, expected);
+		Assertions.assertEquals(expected, results);
 	}
 
 	@BeforeEach
 	void setUp() {
 		Map<String, BatchStocks> repo = Arrays.asList(APPLE_SYMBOL, TESLA_SYMBOL, FACEBOOK_SYMBOL, PARADOX_SYMBOL)
 				.stream().collect(Collectors.toMap(k -> k, IexQuoteServiceTest::createMockBatchStocks));
-		service = new IexQuoteService(new IexBatchStocksService(new MockIexBatchStocksRepository(repo)));
+		service = new IexQuoteService(new IexBatchStocksService(new IexBatchStocksMockRepository(repo)));
 	}
 
 }

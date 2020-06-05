@@ -42,7 +42,7 @@ public class IexBatchStocksCacheRepository implements IIexBatchStocksRepository 
 	}
 
 	@Override
-	public BatchStocks get(String symbol, ChartRange chartRange) {
+	public BatchStocks get(String symbol, ChartRange chartRange) throws Exception {
 		return withCache(chartRange, c -> {
 			try {
 				return c.get(symbol);
@@ -53,7 +53,7 @@ public class IexBatchStocksCacheRepository implements IIexBatchStocksRepository 
 	}
 
 	@Override
-	public List<BatchStocks> getAll(List<String> symbols, ChartRange chartRange) {
+	public List<BatchStocks> getAll(List<String> symbols, ChartRange chartRange) throws Exception {
 		return withCache(chartRange, c -> {
 			try {
 				return new ArrayList<>(c.getAll(symbols).values());

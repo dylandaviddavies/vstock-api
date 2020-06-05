@@ -10,7 +10,7 @@ import pl.zankowski.iextrading4j.api.stocks.Quote;
 
 public interface IIexQuoteService {
 
-	List<Quote> getQuotes(List<String> symbols, String search, ChangeFilter changeFilter, QuoteSort sort,
+	List<Quote> getAll(List<String> symbols, String search, ChangeFilter changeFilter, QuoteSort sort,
 			SortDirection sortDirection, ChartRange chartRange);
 
 }

@@ -7,8 +7,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
-import com.google.common.collect.Lists;
-
 import pl.zankowski.iextrading4j.api.stocks.ChartRange;
 import pl.zankowski.iextrading4j.api.stocks.v1.BatchStocks;
 import pl.zankowski.iextrading4j.client.IEXCloudClient;
@@ -36,10 +34,10 @@ public class IexBatchStocksApiRepository implements IIexBatchStocksRepository {
 	}
 
 	@Override
-	public BatchStocks get(String key, ChartRange chartRange) {
+	public BatchStocks get(String key, ChartRange chartRange) throws Exception {
 		IEXCloudClient client = createClient();
 		return client.executeRequest(new BatchStocksRequestBuilder()//
-				.withSymbol(key.toUpperCase())//
+				.withSymbol(key)//
 				.addType(BatchStocksType.QUOTE)//
 				.addType(BatchStocksType.CHART)//
 				.withChartRange(chartRange)//
@@ -47,15 +45,14 @@ public class IexBatchStocksApiRepository implements IIexBatchStocksRepository {
 	}
 
 	@Override
-	public List<BatchStocks> getAll(List<String> keys, ChartRange chartRange) {
+	public List<BatchStocks> getAll(List<String> keys, ChartRange chartRange) throws Exception {
 		IEXCloudClient client = createClient();
 		Map<String, BatchStocks> stocks = client.executeRequest(new BatchMarketStocksRequestBuilder()//
-				.withSymbols(Lists.newArrayList(keys))//
+				.withSymbols(keys)//
 				.addType(BatchStocksType.QUOTE)//
 				.addType(BatchStocksType.CHART)//
 				.withChartRange(chartRange)//
 				.build());
 		return new ArrayList<>(stocks.values());
 	}
-
 }

@@ -1,6 +1,8 @@
 package me.dylandavies.vstockapi.services;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +23,18 @@ public class IexBatchStocksService implements IIexBatchStocksService {
 	}
 
 	@Override
-	public List<BatchStocks> getBatchStocks(List<String> symbols, ChartRange chartRange) {
-		List<String> uppercasedSymbols = symbols.stream()//
-				.map(String::toUpperCase)//
+	public List<BatchStocks> getAll(List<String> symbols, ChartRange chartRange) {
+		List<String> readiedSymbols = symbols.stream().filter(Objects::nonNull).map(String::toUpperCase)
 				.collect(Collectors.toList());
-		return iexBatchStocksRepository.getAll(uppercasedSymbols, chartRange);
+
+		if (readiedSymbols.isEmpty())
+			return Collections.emptyList();
+
+		try {
+			return iexBatchStocksRepository.getAll(readiedSymbols, chartRange);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Collections.emptyList();
+		}
 	}
 }

@@ -52,7 +52,7 @@ public class V1ApiController {
 	@GetMapping("/myStocksLineChart")
 	public String myStocksLineChart(@Valid @Size(min = 1, max = 50) @RequestParam List<String> symbols,
 			@RequestParam ChartRange chartRange) {
-		List<BatchStocks> stocks = iexBatchStocksService.getBatchStocks(symbols, chartRange);
+		List<BatchStocks> stocks = iexBatchStocksService.getAll(symbols, chartRange);
 		LineData data = new LineData();
 		Set<String> labels = new LinkedHashSet<>();
 		for (BatchStocks stock : stocks) {
@@ -92,6 +92,6 @@ public class V1ApiController {
 			@RequestParam(required = false, defaultValue = "CHANGE") QuoteSort sort,
 			@RequestParam(required = false, defaultValue = "DESC") SortDirection sortDirection,
 			@RequestParam(required = false, defaultValue = "ONE_DAY") ChartRange chartRange) {
-		return iexQuoteService.getQuotes(symbols, search, changeFilter, sort, sortDirection, chartRange);
+		return iexQuoteService.getAll(symbols, search, changeFilter, sort, sortDirection, chartRange);
 	}
 }
