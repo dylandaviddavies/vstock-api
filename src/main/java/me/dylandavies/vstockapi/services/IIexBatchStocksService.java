@@ -13,6 +13,8 @@ import pl.zankowski.iextrading4j.api.stocks.v1.BatchStocks;
  */
 public interface IIexBatchStocksService {
 
+	BatchStocks get(String symbol, ChartRange chartRange);
+
 	List<BatchStocks> getAll(List<String> symbols, ChartRange chartRange);
 
 }

@@ -35,7 +35,7 @@ public class IexQuoteService implements IIexQuoteService {
 
 	@Override
 	public List<Quote> getAll(List<String> symbols, String search, ChangeFilter changeFilter, QuoteSort sort,
-			SortDirection sortDirection, ChartRange chartRange) {
+			SortDirection sortDirection, ChartRange chartRange, Integer limit) {
 		Stream<Quote> stream = getAll(symbols, chartRange)//
 				.stream()//
 				.filter(Optional.ofNullable(search)//
@@ -48,6 +48,9 @@ public class IexQuoteService implements IIexQuoteService {
 
 		if (sort != null && sortDirection != null)
 			stream = stream.sorted(sort.getComparator(sortDirection));
+
+		if (limit != null)
+			stream = stream.limit(limit);
 
 		return stream.collect(Collectors.toList());
 	}

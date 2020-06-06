@@ -11,6 +11,6 @@ import pl.zankowski.iextrading4j.api.stocks.Quote;
 public interface IIexQuoteService {
 
 	List<Quote> getAll(List<String> symbols, String search, ChangeFilter changeFilter, QuoteSort sort,
-			SortDirection sortDirection, ChartRange chartRange);
+			SortDirection sortDirection, ChartRange chartRange, Integer limit);
 
 }
