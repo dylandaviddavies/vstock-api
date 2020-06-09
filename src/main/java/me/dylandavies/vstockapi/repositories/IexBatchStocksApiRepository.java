@@ -40,6 +40,7 @@ public class IexBatchStocksApiRepository implements IIexBatchStocksRepository {
 				.withSymbol(key)//
 				.addType(BatchStocksType.QUOTE)//
 				.addType(BatchStocksType.CHART)//
+				.addType(BatchStocksType.NEWS)//
 				.withChartRange(chartRange)//
 				.build());
 	}

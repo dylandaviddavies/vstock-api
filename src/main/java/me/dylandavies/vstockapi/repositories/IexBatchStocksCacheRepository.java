@@ -32,8 +32,6 @@ public class IexBatchStocksCacheRepository implements IIexBatchStocksRepository 
 
 	private IIexBatchStocksRepository iexBatchStocksDataRepository;
 
-	private LoadingCache<String, BatchStocks> monthlyCache;
-
 	private LoadingCache<String, BatchStocks> weeklyCache;
 
 	@Autowired
@@ -66,20 +64,15 @@ public class IexBatchStocksCacheRepository implements IIexBatchStocksRepository 
 	@PostConstruct
 	private void postConstruct() {
 		dailyCache = CacheBuilder.newBuilder()//
-				.maximumSize(100)//
+				.maximumSize(1000)//
 				.weakValues()//
 				.expireAfterWrite(1, TimeUnit.HOURS)//
 				.build(new BatchStocksCacheLoader(iexBatchStocksDataRepository, ChartRange.ONE_DAY));
 		weeklyCache = CacheBuilder.newBuilder()//
-				.maximumSize(100)//
+				.maximumSize(1000)//
 				.weakValues()//
 				.expireAfterWrite(1, TimeUnit.HOURS)//
 				.build(new BatchStocksCacheLoader(iexBatchStocksDataRepository, ChartRange.FIVE_DAYS));
-		monthlyCache = CacheBuilder.newBuilder()//
-				.maximumSize(100)//
-				.weakValues()//
-				.expireAfterWrite(1, TimeUnit.HOURS)//
-				.build(new BatchStocksCacheLoader(iexBatchStocksDataRepository, ChartRange.ONE_MONTH));
 	}
 
 	public <T> T withCache(ChartRange chartRange, Function<LoadingCache<String, BatchStocks>, T> func) {
@@ -88,8 +81,6 @@ public class IexBatchStocksCacheRepository implements IIexBatchStocksRepository 
 			return func.apply(dailyCache);
 		case FIVE_DAYS:
 			return func.apply(weeklyCache);
-		case ONE_MONTH:
-			return func.apply(monthlyCache);
 		default:
 			throw new IllegalArgumentException("Unsupported chartRange: " + chartRange);
 		}

@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import me.dylandavies.vstockapi.services.IexBatchStocksService;
+import me.dylandavies.vstockapi.services.IIexBatchStocksService;
 import pl.zankowski.iextrading4j.api.stocks.ChartRange;
 import pl.zankowski.iextrading4j.api.stocks.v1.BatchStocks;
 import pl.zankowski.iextrading4j.api.stocks.v1.News;
@@ -16,10 +16,10 @@ import pl.zankowski.iextrading4j.api.stocks.v1.News;
 @Service
 public class IexNewsService implements IIexNewsService {
 
-	private IexBatchStocksService iexBatchStocksService;
+	private IIexBatchStocksService iexBatchStocksService;
 
 	@Autowired
-	public IexNewsService(IexBatchStocksService iexBatchStocksService) {
+	public IexNewsService(IIexBatchStocksService iexBatchStocksService) {
 		this.iexBatchStocksService = iexBatchStocksService;
 	}
 
