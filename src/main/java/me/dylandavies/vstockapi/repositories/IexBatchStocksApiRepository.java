@@ -42,6 +42,7 @@ public class IexBatchStocksApiRepository implements IIexBatchStocksRepository {
 	public BatchStocks get(String key, ChartRange chartRange) throws Exception {
 		IEXCloudClient client = createClient();
 		return client.executeRequest(new IexBatchStocksRequestBuilder()//
+				.withFilters(FILTERS)//
 				.withSymbol(key)//
 				.addType(BatchStocksType.QUOTE)//
 				.addType(BatchStocksType.CHART)//

@@ -1,6 +1,7 @@
 package me.dylandavies.vstockapi.iex;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -27,4 +28,8 @@ public class IexBatchStocksRequestBuilder extends BatchStocksRequestBuilder {
 		return this;
 	}
 
+	public IexBatchStocksRequestBuilder withFilters(List<String> filters) {
+		this.filters.addAll(filters);
+		return this;
+	}
 }
