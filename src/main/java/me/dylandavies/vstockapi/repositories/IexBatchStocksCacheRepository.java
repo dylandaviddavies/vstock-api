@@ -66,12 +66,12 @@ public class IexBatchStocksCacheRepository implements IIexBatchStocksRepository 
 		dailyCache = CacheBuilder.newBuilder()//
 				.maximumSize(1000)//
 				.weakValues()//
-				.expireAfterWrite(1, TimeUnit.HOURS)//
+				.expireAfterWrite(12, TimeUnit.HOURS)//
 				.build(new BatchStocksCacheLoader(iexBatchStocksDataRepository, ChartRange.ONE_DAY));
 		weeklyCache = CacheBuilder.newBuilder()//
 				.maximumSize(1000)//
 				.weakValues()//
-				.expireAfterWrite(1, TimeUnit.HOURS)//
+				.expireAfterWrite(12, TimeUnit.HOURS)//
 				.build(new BatchStocksCacheLoader(iexBatchStocksDataRepository, ChartRange.FIVE_DAYS));
 	}
 
