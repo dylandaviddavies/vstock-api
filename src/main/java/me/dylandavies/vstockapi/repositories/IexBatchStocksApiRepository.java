@@ -64,4 +64,9 @@ public class IexBatchStocksApiRepository implements IIexBatchStocksRepository {
 				.build());
 		return new ArrayList<>(stocks.values());
 	}
+
+	@Override
+	public List<BatchStocks> getTrending() throws Exception {
+		throw new UnsupportedOperationException();
+	}
 }

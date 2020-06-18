@@ -13,4 +13,6 @@ public interface IIexQuoteService {
 	List<Quote> getAll(List<String> symbols, String search, ChangeFilter changeFilter, QuoteSort sort,
 			SortDirection sortDirection, ChartRange chartRange, Integer limit);
 
+	List<Quote> getTrending();
+
 }

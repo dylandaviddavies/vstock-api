@@ -54,7 +54,7 @@ public class V1ApiController {
 	private IIexQuoteService iexQuoteService;
 
 	@GetMapping("/myStocksLineChart")
-	public String myStocksLineChart(@Valid @Size(min = 1, max = 50) @RequestParam List<String> symbols,
+	public String myStocksLineChart(@Valid @Size(min = 1, max = 8) @RequestParam List<String> symbols,
 			@RequestParam(required = false, defaultValue = "ONE_DAY") ChartRange chartRange) {
 		List<BatchStocks> stocks = iexBatchStocksService.getAll(symbols, chartRange);
 		LineData data = new LineData();
@@ -96,7 +96,7 @@ public class V1ApiController {
 	}
 
 	@GetMapping("/quotes")
-	public List<Quote> quotes(@Valid @Size(min = 1, max = 50) @RequestParam List<String> symbols,
+	public List<Quote> quotes(@Valid @Size(min = 1, max = 8) @RequestParam List<String> symbols,
 			@RequestParam(required = false) String search, @RequestParam(required = false) ChangeFilter changeFilter,
 			@RequestParam(required = false, defaultValue = "CHANGE") QuoteSort sort,
 			@RequestParam(required = false, defaultValue = "DESC") SortDirection sortDirection,
@@ -109,5 +109,10 @@ public class V1ApiController {
 	public BatchStocks stock(@PathVariable String symbol,
 			@RequestParam(defaultValue = "ONE_DAY") ChartRange chartRange) {
 		return iexBatchStocksService.get(symbol, chartRange);
+	}
+
+	@GetMapping("/trendingQuotes")
+	public List<Quote> trendingQuotes() {
+		return iexQuoteService.getTrending();
 	}
 }

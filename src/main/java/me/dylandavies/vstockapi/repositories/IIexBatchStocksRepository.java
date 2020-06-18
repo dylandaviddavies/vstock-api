@@ -17,4 +17,6 @@ public interface IIexBatchStocksRepository {
 
 	List<BatchStocks> getAll(List<String> symbols, ChartRange chartRange) throws Exception;
 
+	List<BatchStocks> getTrending() throws Exception;
+
 }

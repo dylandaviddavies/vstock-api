@@ -17,4 +17,6 @@ public interface IIexBatchStocksService {
 
 	List<BatchStocks> getAll(List<String> symbols, ChartRange chartRange);
 
+	List<BatchStocks> getTrending();
+
 }

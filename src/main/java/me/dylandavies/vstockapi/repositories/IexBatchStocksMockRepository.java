@@ -35,4 +35,9 @@ public class IexBatchStocksMockRepository implements IIexBatchStocksRepository {
 				.collect(Collectors.toList());
 	}
 
+	@Override
+	public List<BatchStocks> getTrending() throws Exception {
+		throw new UnsupportedOperationException();
+	}
+
 }

@@ -58,4 +58,14 @@ public class IexBatchStocksService implements IIexBatchStocksService {
 			return Collections.emptyList();
 		}
 	}
+
+	@Override
+	public List<BatchStocks> getTrending() {
+		try {
+			return iexBatchStocksRepository.getTrending();
+		} catch (Exception e) {
+			LOGGER.log(Level.FINER, "Failed to get trending stocks.");
+			return Collections.emptyList();
+		}
+	}
 }
