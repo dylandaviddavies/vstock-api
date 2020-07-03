@@ -27,6 +27,7 @@ import me.dylandavies.vstockapi.enums.SortDirection;
 import me.dylandavies.vstockapi.repositories.IIexNewsService;
 import me.dylandavies.vstockapi.services.IIexBatchStocksService;
 import me.dylandavies.vstockapi.services.IIexQuoteService;
+import me.dylandavies.vstockapi.utils.TrendingData;
 import pl.zankowski.iextrading4j.api.stocks.Chart;
 import pl.zankowski.iextrading4j.api.stocks.ChartRange;
 import pl.zankowski.iextrading4j.api.stocks.Quote;
@@ -111,8 +112,14 @@ public class V1ApiController {
 		return iexBatchStocksService.get(symbol, chartRange);
 	}
 
+	@GetMapping("/trending/{symbol}")
+	public TrendingData trending(@PathVariable String symbol,
+			@RequestParam(defaultValue = "ONE_DAY") ChartRange chartRange) {
+		return iexBatchStocksService.getTrendingData(symbol, chartRange);
+	}
+
 	@GetMapping("/trendingQuotes")
 	public List<Quote> trendingQuotes() {
-		return iexQuoteService.getTrending();
+		return iexQuoteService.getTrendingQuotes();
 	}
 }

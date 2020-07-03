@@ -22,6 +22,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.LoadingCache;
 
 import me.dylandavies.vstockapi.cache.BatchStocksCacheLoader;
+import me.dylandavies.vstockapi.utils.TrendingData;
 import pl.zankowski.iextrading4j.api.stocks.ChartRange;
 import pl.zankowski.iextrading4j.api.stocks.v1.BatchStocks;
 
@@ -86,6 +87,13 @@ public class IexBatchStocksCacheRepository implements IIexBatchStocksRepository 
 						return null;
 					}
 				}).filter(Objects::nonNull).collect(Collectors.toList());
+	}
+
+	@Override
+	public TrendingData getTrendingData(String symbol, ChartRange chartRange) throws Exception {
+		BatchStocks stock = get(symbol, chartRange);
+		int rank = getTrending().indexOf(stock) + 1;
+		return new TrendingData(symbol, rank);
 	}
 
 	@PostConstruct

@@ -56,7 +56,7 @@ public class IexQuoteService implements IIexQuoteService {
 	}
 
 	@Override
-	public List<Quote> getTrending() {
+	public List<Quote> getTrendingQuotes() {
 		return iexBatchStocksService.getTrending().stream().map(BatchStocks::getQuote).collect(Collectors.toList());
 	}
 }

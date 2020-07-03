@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import me.dylandavies.vstockapi.repositories.IIexBatchStocksRepository;
+import me.dylandavies.vstockapi.utils.TrendingData;
 import pl.zankowski.iextrading4j.api.stocks.ChartRange;
 import pl.zankowski.iextrading4j.api.stocks.v1.BatchStocks;
 
@@ -66,6 +67,16 @@ public class IexBatchStocksService implements IIexBatchStocksService {
 		} catch (Exception e) {
 			LOGGER.log(Level.FINER, "Failed to get trending stocks.");
 			return Collections.emptyList();
+		}
+	}
+
+	@Override
+	public TrendingData getTrendingData(String symbol, ChartRange chartRange) {
+		try {
+			return iexBatchStocksRepository.getTrendingData(symbol, chartRange);
+		} catch (Exception e) {
+			LOGGER.log(Level.FINER, "Failed to get trending data for stock: " + symbol);
+			return null;
 		}
 	}
 }

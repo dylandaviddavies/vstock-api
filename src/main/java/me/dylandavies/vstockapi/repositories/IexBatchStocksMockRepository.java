@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import me.dylandavies.vstockapi.utils.TrendingData;
 import pl.zankowski.iextrading4j.api.stocks.ChartRange;
 import pl.zankowski.iextrading4j.api.stocks.v1.BatchStocks;
 
@@ -37,6 +38,11 @@ public class IexBatchStocksMockRepository implements IIexBatchStocksRepository {
 
 	@Override
 	public List<BatchStocks> getTrending() throws Exception {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public TrendingData getTrendingData(String symbol, ChartRange chartRange) throws Exception {
 		throw new UnsupportedOperationException();
 	}
 

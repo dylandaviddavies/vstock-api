@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import me.dylandavies.vstockapi.iex.IexBatchMarketStocksRequestBuilder;
 import me.dylandavies.vstockapi.iex.IexBatchStocksRequestBuilder;
+import me.dylandavies.vstockapi.utils.TrendingData;
 import pl.zankowski.iextrading4j.api.stocks.ChartRange;
 import pl.zankowski.iextrading4j.api.stocks.v1.BatchStocks;
 import pl.zankowski.iextrading4j.client.IEXCloudClient;
@@ -67,6 +68,11 @@ public class IexBatchStocksApiRepository implements IIexBatchStocksRepository {
 
 	@Override
 	public List<BatchStocks> getTrending() throws Exception {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public TrendingData getTrendingData(String symbol, ChartRange chartRange) {
 		throw new UnsupportedOperationException();
 	}
 }
