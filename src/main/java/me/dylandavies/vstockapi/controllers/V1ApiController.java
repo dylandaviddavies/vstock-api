@@ -21,6 +21,7 @@ import be.ceau.chart.LineChart;
 import be.ceau.chart.color.Color;
 import be.ceau.chart.data.LineData;
 import be.ceau.chart.dataset.LineDataset;
+import be.ceau.chart.options.elements.Fill;
 import me.dylandavies.vstockapi.enums.ChangeFilter;
 import me.dylandavies.vstockapi.enums.QuoteSort;
 import me.dylandavies.vstockapi.enums.SortDirection;
@@ -63,7 +64,8 @@ public class V1ApiController {
 		for (BatchStocks stock : stocks) {
 			LineDataset dataset = new LineDataset();
 			Quote quote = stock.getQuote();
-			dataset.setBackgroundColor(Color.random());
+			dataset.setBorderColor(Color.random());
+			dataset.setFill(new Fill<>(false));
 			dataset.setLabel(quote.getCompanyName());
 			for (Chart chart : stock.getChart()) {
 				String date = chart.getDate();
