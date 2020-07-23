@@ -3,7 +3,6 @@ package me.dylandavies.vstockapi.repositories;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,15 +24,15 @@ public class IexNewsService implements IIexNewsService {
 
 	@Override
 	public List<News> getAll(List<String> symbols, ChartRange chartRange, Integer limit) {
-		Stream<News> stream = iexBatchStocksService.getAll(symbols, chartRange).stream().map(BatchStocks::getNews)
-				.flatMap(List::stream);
+		List<News> list = iexBatchStocksService.getAll(symbols, chartRange).stream().map(BatchStocks::getNews)
+				.flatMap(List::stream).collect(Collectors.toList());
+
+		Collections.shuffle(list);
 
 		if (limit != null)
-			stream = stream.limit(limit);
+			list = list.stream().limit(limit).collect(Collectors.toList());
 
-		List<News> ret = stream.collect(Collectors.toList());
-		Collections.shuffle(ret);
-		return ret;
+		return list;
 	}
 
 }
